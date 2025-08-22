@@ -3,7 +3,7 @@ import express from "express";
 import "reflect-metadata";
 import { createConnection } from "typeorm";
 import RotasUsuário from "./rotas/rotas-usuário";
-import RotasProfessor from "./rotas/rotas-professor";
+import RotasProfessor from "./rotas/rotas-gerente-empresa";
 const app = express();
 const PORT = process.env.PORT
 const CORS_ORIGIN = process.env.CORS_ORIGIN;

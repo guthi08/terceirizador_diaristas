@@ -14,24 +14,24 @@ const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 const [visible, setVisible] = useState(false);
 const tamanhoDesktop = windowWidth > 991;
 const navegar = useNavigate();
-const opçõesProfessor = [
+const opçõesGerenteEmpresa = [
  { label: "Página Inicial", command: () => navegar("/pagina-inicial") },
  { label: "Menu", items: [
  { label: "Cadastrar Usuário", command: () => navegar("/atualizar-usuario"),
  disabled: usuárioLogado.status !== "ativo"},
- { label: "Cadastrar Professor", command: () => navegar("/cadastrar-professor")},
+ { label: "Cadastrar Gerente", command: () => navegar("/cadastrar-gerente-empresa"),},
  { label: "Sair do Sistema", command: () => sairSistema()}
  ]},
  ];
-const opçõesAluno = [];
+const opçõesDiarista = [];
 function sairSistema() {
  setUsuárioLogado({});
  navegar("/");
  };
 function opçõesMenu() {
 switch (usuárioLogado.perfil) {
-case "professor": return opçõesProfessor;
-case "aluno": return opçõesAluno;
+case "gerente": return opçõesGerenteEmpresa;
+case "diarista": return opçõesDiarista;
 default: return;
  }
  };

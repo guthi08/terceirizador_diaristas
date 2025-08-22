@@ -1,7 +1,8 @@
 import { BaseEntity, Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from
 "typeorm";
-import Aluno from "./aluno";
-import Proposta from "./proposta";
+import Diarista from "./diarista";
+import VagaEmprego from "./vagas-empregos";
+
 @Entity()
 export default class Interesse extends BaseEntity {
 @PrimaryGeneratedColumn()
@@ -12,8 +13,9 @@ export default class Interesse extends BaseEntity {
  justificativa: string;
  @CreateDateColumn()
  data_manifestação: Date;
- @ManyToOne(() => Proposta, (proposta) => proposta.interesses, { onDelete: "CASCADE" })
- proposta: Proposta;
- @ManyToOne(() => Aluno, (aluno) => aluno.interesses, { onDelete: "CASCADE" })
- aluno: Aluno;
+ @ManyToOne(() => VagaEmprego, (vaga_emprego) => vaga_emprego.interesses, { onDelete: "CASCADE" })
+ vaga_emprego: VagaEmprego;
+ @ManyToOne(() => Diarista, (diarista) => diarista.interesses, { onDelete: "CASCADE" })
+ Diarista: Diarista;
+    diarista: any;
 }

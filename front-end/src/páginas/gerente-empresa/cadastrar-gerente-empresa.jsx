@@ -7,7 +7,7 @@ import { Dropdown } from "primereact/dropdown";
 import { InputNumber } from "primereact/inputnumber";
 import { Toast } from "primereact/toast";
 import ContextoUsuário from "../../contextos/contexto-usuário";
-import { serviçoCadastrarProfessor, serviçoBuscarProfessor }
+import { serviçoCadastrarGerenteEmpresa, serviçoBuscarGerenteEmpresa }
  from "../../serviços/serviços-professor";
 import mostrarToast from "../../utilitários/mostrar-toast";
 import { MostrarMensagemErro, checarListaVazia, validarCamposObrigatórios }
@@ -15,17 +15,18 @@ import { MostrarMensagemErro, checarListaVazia, validarCamposObrigatórios }
  import {estilizarBotão, estilizarBotãoRetornar, estilizarCard, estilizarDivCampo, estilizarDivider,
  estilizarDropdown, estilizarFlex, estilizarInlineFlex, estilizarInputNumber, estilizarLabel }
  from "../../utilitários/estilos";
-export default function CadastrarProfessor() {
+export default function serviçoCadastrarGerenteEmpresa() {
 const referênciaToast = useRef(null);
 const { usuárioLogado, setUsuárioLogado } = useContext(ContextoUsuário);
 const [dados, setDados] = useState({ titulação: "", anos_experiência_empresarial: "" });
 const [erros, setErros] = useState({});
 const [cpfExistente, setCpfExistente] = useState(false);
 const navegar = useNavigate();
-const opçõesTitulação = [{ label: "Mestrado", value: "mestrado" },
- { label: "Doutorado", value: "doutorado" }];
+const opçõesTitulação = [{ label: "Gerente adiministrativo", value: "gerente_adminstrativo" },
+ { label: "Gerente comercial", value: "gerente_comercial" },
+ { label: "Gerente financeiro", value: "gerente_financeiro" }];
 function alterarEstado(event) {
-const chave = event.target.name || event.value;
+const chave = event.target.name || event.value; 
 const valor = event.target.value;
 setDados({ ...dados, [chave]: valor });
  };
@@ -36,19 +37,19 @@ let errosCamposObrigatórios;
 return checarListaVazia(errosCamposObrigatórios);
  };
 function títuloFormulário() {
-if (usuárioLogado?.cadastrado) return "Consultar Professor";
-else return "Cadastrar Professor";
+if (usuárioLogado?.cadastrado) return "Consultar Gerente de Empresa";
+else return "Cadastrar Gerente";
  };
-async function cadastrarProfessor() {
+async function cadastrarGerenteEmpresa() {
 if (validarCampos()) {
 try {
-const response = await serviçoCadastrarProfessor({ ...dados, usuário_info: usuárioLogado,
+const response = await serviçoCadastrarGerenteEmpresa({ ...dados, usuário_info: usuárioLogado,
  titulação: dados.titulação,
  anos_experiência_empresarial: dados.anos_experiência_empresarial });
 if (response.data)
  setUsuárioLogado(usuário => ({ ...usuário, status: response.data.status,
  token: response.data.token }));
- mostrarToast(referênciaToast, "Professor cadastrado com sucesso!", "sucesso");
+ mostrarToast(referênciaToast, "Gerente cadastrado com sucesso!", "sucesso");
  } catch (error) {
  setCpfExistente(true);
  mostrarToast(referênciaToast, error.response.data.erro, "erro");
@@ -60,7 +61,7 @@ if (usuárioLogado?.cadastrado) return "Consultar";
 else return "Cadastrar";
  };
 function açãoBotãoSalvar() {
-if (!usuárioLogado?.cadastrado) cadastrarProfessor();
+if (!usuárioLogado?.cadastrado) cadastrarGerenteEmpresa();
  };
 function redirecionar() {
 if (cpfExistente) {
@@ -73,7 +74,7 @@ if (cpfExistente) {
  };
   useEffect(() => {
 let desmontado = false;
-async function buscarDadosProfessor() {
+async function buscarDadosGerenteEmpresa() {
 try {
 const response = await serviçoBuscarProfessor(usuárioLogado.cpf);
 if (!desmontado && response.data) {
@@ -85,7 +86,7 @@ const erro = error.response.data.erro;
 if (erro) mostrarToast(referênciaToast, erro, "erro");
  }
  }
-if (usuárioLogado?.cadastrado) buscarDadosProfessor();
+if (usuárioLogado?.cadastrado) buscarDadosGerenteEmpresa();
 return () => desmontado = true;
  }, [usuárioLogado?.cadastrado, usuárioLogado.cpf]);
 return (

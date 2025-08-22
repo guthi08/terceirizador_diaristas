@@ -32,8 +32,8 @@ const [dados, setDados] = useState({ cpf: usuárioLogado?.cpf || "",
  questão: usuárioLogado?.questão || "", resposta: "",
  cor_tema: usuárioLogado?.cor_tema || TEMA_PADRÃO });
 const [erros, setErros] = useState({});
-const opçõesPerfis = [{ label: "Professor", value: "professor" },
- { label: "Aluno", value: "aluno" }];
+const opçõesPerfis = [{ label: "Gerente", value: "Gerente" },
+ { label: "Diarista", value: "Diarista" }];
 function alterarEstado(event) {
 const chave = event.target.name;
 const valor = event.target.value;

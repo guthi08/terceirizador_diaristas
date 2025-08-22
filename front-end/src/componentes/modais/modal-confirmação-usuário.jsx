@@ -23,7 +23,7 @@ default: return;
  };
 function exibirPerfilFormatado() {
 switch (dados.perfil) {
-case "professor": return "Professor";
+case "gerente": return "Gerente";
 default: return "";
  }
  };
@@ -36,10 +36,10 @@ if (confirmaçãoUsuário?.operação) setUsuárioLogado({}); // inseriu ?
  }
  };
 function finalizarCadastro() {
-if (dados.perfil === "professor") {
+if (dados.perfil === "gerente") {
  setUsuárioLogado({ ...dados, cadastrado: false });
  setMostrarModalConfirmação(false);
- navegar("../cadastrar-professor");
+ navegar("../cadastrar-gerente-empresa");
  }
  };
 function executarOperação() {
