@@ -2,7 +2,7 @@ import { useContext, useEffect } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import ContextoUsuário from "../contextos/contexto-usuário";
 import MenuLateral from "../componentes/menu-lateral";
-import servidor from "../serviços/servidor";
+import servidor from "../servidor";
 export default function RotasUsuáriosLogados() {
 const { usuárioLogado } = useContext(ContextoUsuário);
  useEffect(() => {
