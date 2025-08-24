@@ -1,7 +1,7 @@
 import { BaseEntity, Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from
 "typeorm";
 import Usuário from "./usuário";
-import VagaEmprego from "./vagas-empregos";
+import VagaEmprego from "./vaga-emprego";
 export enum Titulação {GA = "Gerente administrativo", GC = "Gerente comercial", GF = "Gerente financeiro" };
 @Entity()
 export default class GerenteEmpresa extends BaseEntity {

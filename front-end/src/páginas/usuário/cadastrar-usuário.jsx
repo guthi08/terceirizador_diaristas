@@ -13,6 +13,7 @@ import ContextoUsuário from "../../contextos/contexto-usuário";
 import ModalConfirmaçãoUsuário from "../../componentes/modais/modal-confirmação-usuário";
 import mostrarToast from "../../utilitários/mostrar-toast";
 import { CPF_MÁSCARA } from "../../utilitários/máscaras";
+
 import { MostrarMensagemErro, checarListaVazia, validarCampoEmail, validarCamposObrigatórios,
  validarConfirmaçãoSenha, validarConfirmaçãoSenhaOpcional, validarRecuperaçãoAcessoOpcional }
  from "../../utilitários/validações";
@@ -22,6 +23,8 @@ import { MostrarMensagemErro, checarListaVazia, validarCampoEmail, validarCampos
  estilizarPasswordInput, estilizarPasswordTextInputBorder, estilizarSubtítulo, opçõesCores }
  from "../../utilitários/estilos";
 import { serviçoVerificarCpfExistente } from "../../serviços/serviços-usuário";
+
+
 export default function CadastrarUsuário() {
 const referênciaToast = useRef(null);
 const { usuárioLogado, mostrarModalConfirmação, setMostrarModalConfirmação, setConfirmaçãoUsuário}

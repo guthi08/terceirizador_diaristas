@@ -12,9 +12,8 @@ import ContextoUsuário from "../../contextos/contexto-usuário";
 import { serviçoCadastrarGerenteEmpresa, serviçoBuscarGerenteEmpresa } from "../../serviços/serviços-gerente-empresa";
 
 import mostrarToast from "../../utilitários/mostrar-toast";
-import { MostrarMensagemErro, checarListaVazia, validarCamposObrigatórios }
- from "../../utilitários/validações";
- import {estilizarBotão, estilizarBotãoRetornar, estilizarCard, estilizarDivCampo, estilizarDivider,
+import { MostrarMensagemErro, checarListaVazia, validarCamposObrigatórios } from "../../utilitários/validações";
+import {estilizarBotão, estilizarBotãoRetornar, estilizarCard, estilizarDivCampo, estilizarDivider,
  estilizarDropdown, estilizarFlex, estilizarInlineFlex, estilizarInputNumber, estilizarLabel }
  from "../../utilitários/estilos";
 

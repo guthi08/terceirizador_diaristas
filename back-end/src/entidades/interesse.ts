@@ -1,7 +1,7 @@
 import { BaseEntity, Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from
 "typeorm";
 import Diarista from "./diarista";
-import VagaEmprego from "./vagas-empregos";
+import VagaEmprego from "./vaga-emprego";
 
 @Entity()
 export default class Interesse extends BaseEntity {
