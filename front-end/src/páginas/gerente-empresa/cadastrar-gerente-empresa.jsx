@@ -81,24 +81,25 @@ function redirecionar() {
   navegar("/pagina-inicial");
   }
  };
-    useEffect(() => {
+
+  useEffect(() => {
   let desmontado = false;
   async function buscarDadosGerenteEmpresa() {
   try {
-  const response = await serviçoBuscarGerenteEmpresa(usuárioLogado.cpf);
-  if (!desmontado && response.data) {
-  setDados(dados => ({ ...dados, titulação: response.data.titulação,
-  anos_experiência_empresarial: response.data.anos_experiência_empresarial }));
-  }
+    const response = await serviçoBuscarGerenteEmpresa(usuárioLogado.cpf);
+    if (!desmontado && response.data) {
+    setDados(dados => ({ ...dados, titulação: response.data.titulação,
+    anos_experiência_empresarial: response.data.anos_experiência_empresarial }));
+    }
   } catch (error) {
-  const erro = error.response.data.erro;
-  if (erro) mostrarToast(referênciaToast, erro, "erro");
+    const erro = error.response.data.erro;
+    if (erro) mostrarToast(referênciaToast, erro, "erro");
+    }
   }
-  }
-  if (usuárioLogado?.cadastrado) buscarDadosGerenteEmpresa();
-  return () => desmontado = true;
-  }, [usuárioLogado?.cadastrado, usuárioLogado.cpf]);
-  return (
+    if (usuárioLogado?.cadastrado) buscarDadosGerenteEmpresa();
+    return () => desmontado = true;
+    }, [usuárioLogado?.cadastrado, usuárioLogado.cpf]);
+    return (
   <div className={estilizarFlex()}>
   <Toast ref={referênciaToast} onHide={redirecionar} position="bottom-center"/>
   <Card title={títuloFormulário()} className={estilizarCard(usuárioLogado.cor_tema)}>
