@@ -9,6 +9,7 @@ import "./global.css";
 import português from "./utilitários/português.json"
 import Rotas from "./rotas/rotas-aplicação";
 import {ProvedorUsuário} from './contextos/contexto-usuário';
+
 addLocale("pt", português)
 locale("pt")
 const rootElement = document.getElementById("root");

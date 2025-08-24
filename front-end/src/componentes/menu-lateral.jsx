@@ -1,55 +1,64 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 import { Button } from "primereact/button";
 import { Menu } from "primereact/menu";
 import { Sidebar } from "primereact/sidebar";
+
+
 import ContextoUsuário from "../contextos/contexto-usuário";
 import formatarPerfil from "../utilitários/formatar-perfil";
 import { estilizarBotão, estilizarColuna, estilizarGridColunaSidebar, estilizarGridSidebar,
- estilizarMenu, estilizarMenuLateralDesktop, estilizarMenuLateralMobile, estilizarSidebar,
- estilizarSubtítulo, estilizarTítulo } from "../utilitários/estilos";
- 
+estilizarMenu, estilizarMenuLateralDesktop, estilizarMenuLateralMobile, estilizarSidebar,
+estilizarSubtítulo, estilizarTítulo } from "../utilitários/estilos";
+
 export default function MenuLateral({ children }) {
     const { usuárioLogado, setUsuárioLogado } = useContext(ContextoUsuário);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const [visible, setVisible] = useState(false);
     const tamanhoDesktop = windowWidth > 991;
     const navegar = useNavigate();
-    const opçõesGerenteEmpresa = [
+    const opçõesProfessor = [
     { label: "Página Inicial", command: () => navegar("/pagina-inicial") },
     { label: "Menu", items: [
     { label: "Cadastrar Usuário", command: () => navegar("/atualizar-usuario"),
     disabled: usuárioLogado.status !== "ativo"},
-    { label: "Cadastrar Gerente", command: () => navegar("/cadastrar-gerente-empresa"),},
+    { label: "Cadastrar Professor", command: () => navegar("/cadastrar-professor")},
     { label: "Sair do Sistema", command: () => sairSistema()}
     ]},
     ];
-    const opçõesDiarista = [];
+
+
+    const opçõesAluno = [];
     function sairSistema() {
-    setUsuárioLogado({});
-    navegar("/");
+        setUsuárioLogado({});
+        navegar("/");
+        };
+        function opçõesMenu() {
+        switch (usuárioLogado.perfil) {
+        case "professor": return opçõesProfessor;
+        case "aluno": return opçõesAluno;
+        default: return;
+        }
     };
-    function opçõesMenu() {
-    switch (usuárioLogado.perfil) {
-    case "gerente": return opçõesGerenteEmpresa;
-    case "diarista": return opçõesDiarista;
-    default: return;
-    }
-    };
+
+
     function redimensionarJanela() {
-    setWindowWidth(window.innerWidth);
-    };
+        setWindowWidth(window.innerWidth);
+        };
+
+
     function MenuServiços() {
-    if (tamanhoDesktop) {
-    return (
-    <div className={estilizarMenuLateralDesktop(usuárioLogado?.cor_tema)}>
-    <h1 className={estilizarTítulo(usuárioLogado?.cor_tema)}>{usuárioLogado?.nome}</h1>
-    <h2 className={estilizarSubtítulo(usuárioLogado?.cor_tema)}>
-    {formatarPerfil(usuárioLogado?.perfil)}</h2>
-    <Menu className={estilizarMenu()} model={opçõesMenu()}/>
-    </div>
-    );
-    } else return (
+        if (tamanhoDesktop) {
+        return (
+        <div className={estilizarMenuLateralDesktop(usuárioLogado?.cor_tema)}>
+        <h1 className={estilizarTítulo(usuárioLogado?.cor_tema)}>{usuárioLogado?.nome}</h1>
+        <h2 className={estilizarSubtítulo(usuárioLogado?.cor_tema)}>
+        {formatarPerfil(usuárioLogado?.perfil)}</h2>
+        <Menu className={estilizarMenu()} model={opçõesMenu()}/>
+        </div>
+        );
+        } else return (
     <>
     <div className={estilizarMenuLateralMobile(usuárioLogado?.cor_tema)}>
     <Button className={estilizarBotão(usuárioLogado?.cor_tema)} icon="pi pi-bars"
@@ -65,6 +74,7 @@ export default function MenuLateral({ children }) {
     </>
     );
     };
+
     useEffect(() => {
     window.addEventListener('resize', redimensionarJanela);
     return () => window.removeEventListener('resize', redimensionarJanela);
@@ -75,4 +85,4 @@ export default function MenuLateral({ children }) {
     <div className={estilizarColuna()}>{children}</div>
     </div>
     );
-}
+    }
