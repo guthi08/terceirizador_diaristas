@@ -23,21 +23,21 @@ export default function MenuLateral({ children }) {
     { label: "Menu", items: [
     { label: "Cadastrar Usuário", command: () => navegar("/atualizar-usuario"),
     disabled: usuárioLogado.status !== "ativo"},
-    { label: "Cadastrar Professor", command: () => navegar("/cadastrar-professor")},
+    { label: "Cadastrar Gerente", command: () => navegar("/cadastrar-gerente-empresa"),},
     { label: "Sair do Sistema", command: () => sairSistema()}
     ]},
     ];
 
 
-    const opçõesAluno = [];
+    const opçõesDiarista = [];
     function sairSistema() {
         setUsuárioLogado({});
         navegar("/");
         };
         function opçõesMenu() {
         switch (usuárioLogado.perfil) {
-                case "gerente-empresa": return opçõesGerenteEmpresa;
-                case "diarista": return opçõesAluno;
+                case "cadastrar-gerente-empresa": return opçõesGerenteEmpresa;
+                case "diarista": return opçõesDia;
         default: return;
         }
     };

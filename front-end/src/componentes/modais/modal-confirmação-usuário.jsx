@@ -51,7 +51,7 @@ export default function ModalConfirmaçãoUsuário() {
 
 
     function finalizarCadastro() {
-        if (dados.perfil === "professor") {
+        if (dados.perfil === "pro") {
             setUsuárioLogado({ ...dados, cadastrado: false });
             setMostrarModalConfirmação(false);
             navegar("../cadastrar-professor");
