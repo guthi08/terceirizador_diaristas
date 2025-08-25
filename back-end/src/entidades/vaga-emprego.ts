@@ -28,7 +28,7 @@ export default class VagaEmprego extends BaseEntity {
     urgência: boolean;
 
     @ManyToOne(() => GerenteEmpresa, (gerente_empresa) => gerente_empresa.vagas_empregos, { onDelete: "CASCADE" })
-    gerente_empresa: GerenteEmpresa;
+    gerente_empresa: GerenteEmpresa[];
 
     @OneToMany(() => Interesse, (interesse) => interesse.vaga_emprego)
     interesses: Interesse[];

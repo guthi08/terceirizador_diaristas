@@ -3,7 +3,7 @@ import { BaseEntity, Column, CreateDateColumn, Entity, OneToOne, PrimaryColumn }
 import Diarista from "./diarista";
 import GerenteEmpresa from "./gerente-empresa";
 
-export enum Perfil { DIARISTA = "Diarista", GERENTE_EMPRESA = "Gerente de Empresa" };
+export enum Perfil { DIARISTA = "Diarista", GERENTE_EMPRESA = "Gerente empresa" };
 export enum Status { PENDENTE = "pendente", ATIVO = "ativo" };
 
 export enum Cores { AMARELO = "yellow", ANIL = "indigo", AZUL = "blue", AZUL_PISCINA = "cyan",

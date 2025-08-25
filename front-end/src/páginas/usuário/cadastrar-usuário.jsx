@@ -42,7 +42,7 @@ export default function CadastrarUsuário() {
 
 
     const [erros, setErros] = useState({});
-    const opçõesPerfis = [{ label: "Gerente de empresa", value: "gerente" },
+    const opçõesPerfis = [{ label: "Gerente empresa", value: "gerente empresa" },
     { label: "Diarista", value: "diarista" }];
 
 

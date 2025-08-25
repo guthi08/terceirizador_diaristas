@@ -3,7 +3,8 @@ import { BaseEntity, Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGen
 import Usuário from "./usuário";
 import VagaEmprego from "./vaga-emprego";
 
-export enum Titulação {GA = "Gerente administrativo", GC = "Gerente comercial", GF = "Gerente financeiro",};
+export enum Titulação {GERENTE_ADMINISTRATIVO
+     = "Gerente administrativo", GERENTE_COMERCIAL = "Gerente comercial", GERENTE_FINANCEIRO = "Gerente financeiro",};
 
 @Entity()
 export default class GerenteEmpresa extends BaseEntity {

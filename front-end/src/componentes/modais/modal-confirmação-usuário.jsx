@@ -34,7 +34,7 @@ export default function ModalConfirmaçãoUsuário() {
 
     function exibirPerfilFormatado() {
         switch (dados.perfil) {
-            case "professor": return "Professor";
+            case "gerente empresa": return "gerente empresa";
         default: return "";
         }
     };
@@ -51,10 +51,10 @@ export default function ModalConfirmaçãoUsuário() {
 
 
     function finalizarCadastro() {
-        if (dados.perfil === "pro") {
+        if (dados.perfil === "gerente empresa") {
             setUsuárioLogado({ ...dados, cadastrado: false });
             setMostrarModalConfirmação(false);
-            navegar("../cadastrar-professor");
+            navegar("../cadastrar-gerente-empresa");
         }
     };
 
