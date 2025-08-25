@@ -6,5 +6,6 @@ import ServiçosGerenteEmpresa from "../serviços/serviços-gerente-empresa";
 
 const RotasGerenteEmpresa = Router();
 export default RotasGerenteEmpresa;
-    RotasGerenteEmpresa.put("/", ServiçosGerenteEmpresa.cadastrarGerenteEmpresa);
-    RotasGerenteEmpresa.get("/:cpf", verificarToken, verificarPerfilGerenteEmpresa,ServiçosGerenteEmpresa.buscarGerenteEmpresa);
+    RotasGerenteEmpresa.post("/", ServiçosGerenteEmpresa.cadastrarGerenteEmpresa);
+    RotasGerenteEmpresa.get("/:cpf", verificarToken, verificarPerfilGerenteEmpresa,
+    ServiçosGerenteEmpresa.buscarGerenteEmpresa);

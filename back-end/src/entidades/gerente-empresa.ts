@@ -2,22 +2,23 @@ import { BaseEntity, Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGen
 "typeorm";
 import Usuário from "./usuário";
 import VagaEmprego from "./vaga-emprego";
-export enum Titulação {GA = "Gerente administrativo", GC = "Gerente comercial", GF = "Gerente financeiro" };
+
+export enum Titulação {GA = "Gerente administrativo", GC = "Gerente comercial", GF = "Gerente financeiro",};
 
 @Entity()
 export default class GerenteEmpresa extends BaseEntity {
-    
+
     @PrimaryGeneratedColumn()
     id: number;
-
     @Column({ type: "enum", enum: Titulação })
     titulação: Titulação;
 
     @Column()
-    telefone: string;
-    @Column()
-
     anos_experiência_empresarial: number;
+
+    @Column()
+    telefone: string;
+    
     @OneToMany(() => VagaEmprego, (vaga_emprego) => vaga_emprego.gerente_empresa)
     vagas_empregos: VagaEmprego[];
 

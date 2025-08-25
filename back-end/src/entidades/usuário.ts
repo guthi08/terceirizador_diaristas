@@ -1,13 +1,19 @@
 import { BaseEntity, Column, CreateDateColumn, Entity, OneToOne, PrimaryColumn } from "typeorm";
-import GerenteEmpresa from "./gerente-empresa";
+
 import Diarista from "./diarista";
-export enum Perfil { DIARISTA = "diarista", GERENTE_EMPRESA= "gerente" };
+import GerenteEmpresa from "./gerente-empresa";
+
+export enum Perfil { DIARISTA = "Diarista", GERENTE_EMPRESA = "Gerente de Empresa" };
 export enum Status { PENDENTE = "pendente", ATIVO = "ativo" };
+
 export enum Cores { AMARELO = "yellow", ANIL = "indigo", AZUL = "blue", AZUL_PISCINA = "cyan",
- CINZA_ESCURO = "bluegray", LARANJA = "orange", ROSA = "pink", ROXO = "purple", VERDE = "green",
- VERDE_AZULADO = "teal" };
+CINZA_ESCURO = "bluegray", LARANJA = "orange", ROSA = "pink", ROXO = "purple", VERDE = "green",
+VERDE_AZULADO = "teal" };
+
+
 @Entity()
 export default class Usuário extends BaseEntity {
+
     @PrimaryColumn()
     cpf: string;
 
@@ -44,3 +50,4 @@ export default class Usuário extends BaseEntity {
     @CreateDateColumn()
     data_criação: Date;
 }
+

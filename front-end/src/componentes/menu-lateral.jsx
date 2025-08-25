@@ -18,7 +18,7 @@ export default function MenuLateral({ children }) {
     const [visible, setVisible] = useState(false);
     const tamanhoDesktop = windowWidth > 991;
     const navegar = useNavigate();
-    const opçõesProfessor = [
+    const opçõesGerenteEmpresa = [
     { label: "Página Inicial", command: () => navegar("/pagina-inicial") },
     { label: "Menu", items: [
     { label: "Cadastrar Usuário", command: () => navegar("/atualizar-usuario"),
@@ -36,8 +36,8 @@ export default function MenuLateral({ children }) {
         };
         function opçõesMenu() {
         switch (usuárioLogado.perfil) {
-        case "professor": return opçõesProfessor;
-        case "aluno": return opçõesAluno;
+                case "gerente-empresa": return opçõesGerenteEmpresa;
+                case "diarista": return opçõesAluno;
         default: return;
         }
     };
@@ -50,19 +50,21 @@ export default function MenuLateral({ children }) {
 
     function MenuServiços() {
         if (tamanhoDesktop) {
-        return (
-        <div className={estilizarMenuLateralDesktop(usuárioLogado?.cor_tema)}>
-        <h1 className={estilizarTítulo(usuárioLogado?.cor_tema)}>{usuárioLogado?.nome}</h1>
-        <h2 className={estilizarSubtítulo(usuárioLogado?.cor_tema)}>
-        {formatarPerfil(usuárioLogado?.perfil)}</h2>
-        <Menu className={estilizarMenu()} model={opçõesMenu()}/>
-        </div>
-        );
+            return (
+            <div className={estilizarMenuLateralDesktop(usuárioLogado?.cor_tema)}>
+                <h1 className={estilizarTítulo(usuárioLogado?.cor_tema)}>{usuárioLogado?.nome}</h1>
+                <h2 className={estilizarSubtítulo(usuárioLogado?.cor_tema)}>
+            {formatarPerfil(usuárioLogado?.perfil)}</h2>
+            <Menu className={estilizarMenu()} model={opçõesMenu()}/>
+            </div>
+            );
         } else return (
     <>
+
     <div className={estilizarMenuLateralMobile(usuárioLogado?.cor_tema)}>
     <Button className={estilizarBotão(usuárioLogado?.cor_tema)} icon="pi pi-bars"
     aria-label="Filter" onClick={() => setVisible(true)}/>
+    
     <h1 className={estilizarTítulo(usuárioLogado?.cor_tema)}>{usuárioLogado?.nome}</h1>
     <h2 className={estilizarSubtítulo(usuárioLogado?.cor_tema)}>
     {formatarPerfil(usuárioLogado?.perfil)}</h2>

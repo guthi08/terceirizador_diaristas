@@ -1,8 +1,9 @@
 import { BaseEntity, Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn }
- from "typeorm";
+from "typeorm";
 import Usuário from "./usuário";
 import Interesse from "./interesse";
-export enum ÁreaAtuação { TC = "Técnico", GR= "Garçom", CA= "Caixa", SG= "Serviçoes gerais" };
+export enum Área_atuação { TECNICO = "Técnico", GARÇOM = "Garçom", CAIXA = "Caixa", SERVIÇOS_GERAIS = "Serviços Gerais" };
+
 
 @Entity()
 export default class Diarista extends BaseEntity {
@@ -10,22 +11,23 @@ export default class Diarista extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({ type: "enum", enum: ÁreaAtuação })
-    área_atuação: ÁreaAtuação;
+    @Column({ type: "enum", enum: Área_atuação })
+    área_atuação: Área_atuação;
+
+    @Column()
+    tempo_experiêcia_área: number;
 
     @Column({ type: "date" })
     data_nascimento: Date;
 
     @Column()
-    tempo_experiência_área: number;
-
-    @Column()
-    telefone: string;
+    celular: string;
 
     @OneToMany(() => Interesse, (interesse) => interesse.diarista)
     interesses: Interesse[];
-    
+
     @OneToOne(() => Usuário, usuário => usuário.diarista, { onDelete: "CASCADE" })
     @JoinColumn()
     usuário: Usuário;
+
 }

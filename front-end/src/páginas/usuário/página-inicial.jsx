@@ -13,7 +13,7 @@ export default function PáginaInicial() {
     function HeaderCentralizado() {
 
         return (<div className={estilizarCardHeaderCentralizado()}>
-        Propostas de Trabalhos de Computação</div>)
+        Terceirização de Diariatas</div>)
     };
         return (
         <div className={estilizarPáginaÚnica()}>

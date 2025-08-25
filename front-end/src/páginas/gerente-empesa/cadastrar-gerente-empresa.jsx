@@ -9,8 +9,8 @@ import { InputNumber } from "primereact/inputnumber";
 import { Toast } from "primereact/toast";
 
 import ContextoUsuário from "../../contextos/contexto-usuário";
-import { serviçoCadastrarProfessor, serviçoBuscarProfessor }
-from "../../serviços/serviços-professor";
+import { serviçoCadastrarGerenteEmpresa,  serviçoCadastrarGerenteEmpresa, serviçoBuscarGerenteEmpresa }
+from "../../serviços/serviços-gerente-empresa";
 import mostrarToast from "../../utilitários/mostrar-toast";
 import { MostrarMensagemErro, checarListaVazia, validarCamposObrigatórios }
 from "../../utilitários/validações";
@@ -19,7 +19,7 @@ estilizarDropdown, estilizarFlex, estilizarInlineFlex, estilizarInputNumber, est
 from "../../utilitários/estilos";
 
 
-export default function CadastrarProfessor() {
+export default function CadastrarGerenteEmpresa() {
 
     const referênciaToast = useRef(null);
     const { usuárioLogado, setUsuárioLogado } = useContext(ContextoUsuário);
@@ -27,8 +27,9 @@ export default function CadastrarProfessor() {
     const [erros, setErros] = useState({});
     const [cpfExistente, setCpfExistente] = useState(false);
     const navegar = useNavigate();
-    const opçõesTitulação = [{ label: "Mestrado", value: "mestrado" },
-    { label: "Doutorado", value: "doutorado" }];
+    const opçõesTitulação = [{ label: "Gerente administrativo", value: "gerente adiministrativo" },
+    { label: "Gerente comercial", value: "gerente comercial" },
+    { label: "Gerente financeiro", value: "gerente financeiro" }];
 
 
     function alterarEstado(event) {
@@ -46,21 +47,21 @@ export default function CadastrarProfessor() {
 
 
     function títuloFormulário() {
-        if (usuárioLogado?.cadastrado) return "Consultar Professor";
-        else return "Cadastrar Professor";
+        if (usuárioLogado?.cadastrado) return "Consultar Gerente";
+        else return "Cadastrar Gerente";
         };
 
 
-        async function cadastrarProfessor() {
+        async function cadastrarGerenteEmpresa() {
         if (validarCampos()) {
             try {
-            const response = await serviçoCadastrarProfessor({ ...dados, usuário_info: usuárioLogado,
+            const response = await serviçoCadastrarGerenteEmpresa({ ...dados, usuário_info: usuárioLogado,
             titulação: dados.titulação,
             anos_experiência_empresarial: dados.anos_experiência_empresarial });
             if (response.data)
             setUsuárioLogado(usuário => ({ ...usuário, status: response.data.status,
             token: response.data.token }));
-            mostrarToast(referênciaToast, "Professor cadastrado com sucesso!", "sucesso");
+            mostrarToast(referênciaToast, "Gerente cadastrado com sucesso!", "sucesso");
             } catch (error) {
             setCpfExistente(true);
             mostrarToast(referênciaToast, error.response.data.erro, "erro");
@@ -76,7 +77,7 @@ export default function CadastrarProfessor() {
 
 
     function açãoBotãoSalvar() {
-        if (!usuárioLogado?.cadastrado) cadastrarProfessor();
+        if (!usuárioLogado?.cadastrado) cadastrarGerenteEmpresa();
     };
 
 
@@ -93,21 +94,22 @@ export default function CadastrarProfessor() {
 
     useEffect(() => {
         let desmontado = false;
-        async function buscarDadosProfessor() {
+        async function buscarDadosGerenteEmpresa() {
         try {
-            const response = await serviçoBuscarProfessor(usuárioLogado.cpf);
+            const response = await serviçoBuscarGerenteEmpresa(usuárioLogado.cpf);
             if (!desmontado && response.data) {
             setDados(dados => ({ ...dados, titulação: response.data.titulação,
             anos_experiência_empresarial: response.data.anos_experiência_empresarial }));
         }
         } catch (error) {
-        const erro = error.response.data.erro;
-        if (erro) mostrarToast(referênciaToast, erro, "erro");
-        }
-        }
-        if (usuárioLogado?.cadastrado) buscarDadosProfessor();
-        return () => desmontado = true;
-    }, [usuárioLogado?.cadastrado, usuárioLogado.cpf]);
+            const erro = error.response.data.erro;
+            if (erro) mostrarToast(referênciaToast, erro, "erro");
+        }      
+            }
+            if (usuárioLogado?.cadastrado) buscarDadosGerenteEmpresa();
+                return () => desmontado = true;
+            }, [usuárioLogado?.cadastrado, usuárioLogado.cpf]);
+
     return (
         <div className={estilizarFlex()}>
         <Toast ref={referênciaToast} onHide={redirecionar} position="bottom-center"/>

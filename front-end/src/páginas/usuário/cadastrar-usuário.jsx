@@ -27,21 +27,29 @@ from "../../utilitários/estilos";
 import { serviçoVerificarCpfExistente } from "../../serviços/serviços-usuário";
 
 export default function CadastrarUsuário() {
+
+
     const referênciaToast = useRef(null);
     const { usuárioLogado, mostrarModalConfirmação, setMostrarModalConfirmação, setConfirmaçãoUsuário}
     = useContext(ContextoUsuário);
+
+
     const [dados, setDados] = useState({ cpf: usuárioLogado?.cpf || "",
     nome: usuárioLogado?.nome || "", perfil: usuárioLogado?.perfil || "",
     email: usuárioLogado?.email || "", senha: "", confirmação: "",
     questão: usuárioLogado?.questão || "", resposta: "",
     cor_tema: usuárioLogado?.cor_tema || TEMA_PADRÃO });
+
+
     const [erros, setErros] = useState({});
-    const opçõesPerfis = [{ label: "Professor", value: "professor" },
-    { label: "Aluno", value: "aluno" }];
+    const opçõesPerfis = [{ label: "Gerente de empresa", value: "gerente" },
+    { label: "Diarista", value: "diarista" }];
+
+
     function alterarEstado(event) {
-    const chave = event.target.name;
-    const valor = event.target.value;
-    setDados({ ...dados, [chave]: valor });
+        const chave = event.target.name;
+        const valor = event.target.value;
+        setDados({ ...dados, [chave]: valor });
     };
 
 
