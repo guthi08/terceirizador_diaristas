@@ -9,7 +9,7 @@ import { InputNumber } from "primereact/inputnumber";
 import { Toast } from "primereact/toast";
 
 import ContextoUsuário from "../../contextos/contexto-usuário";
-import { serviçoCadastrarGerenteEmpresa, serviçoBuscarGerenteEmpresa } from "../../serviços/serviços-gerente-empresa";
+import {serviçoCadastrarGerenteEmpresa, serviçoBuscarGerenteEmpresa} from "../../serviços/serviços-gerente-empresa";
 import mostrarToast from "../../utilitários/mostrar-toast";
 import { MostrarMensagemErro, checarListaVazia, validarCamposObrigatórios } from "../../utilitários/validações";
 
@@ -17,6 +17,8 @@ import { estilizarBotão, estilizarBotãoRetornar, estilizarCard, estilizarDivCa
 
 
 export default function CadastrarGerenteEmpresa() {
+
+
     const referênciaToast = useRef(null);
     const { usuárioLogado, setUsuárioLogado } = useContext(ContextoUsuário);
     const [dados, setDados] = useState({ titulação: "", anos_experiência_empresarial: "" });
@@ -25,8 +27,8 @@ export default function CadastrarGerenteEmpresa() {
     const navegar = useNavigate();
 
     const opçõesTitulação = [
-        { label: "Gerente administrativo", value: "Gerente administrativo" },
-        { label: "Doutorado", value: "doutorado" }
+        { label: "Gerente administrativo", value: "gerente administrativo" },
+        { label: "Gerente financeiro", value: "gerente financeiro" },
     ];
 
     function alterarEstado(event) {

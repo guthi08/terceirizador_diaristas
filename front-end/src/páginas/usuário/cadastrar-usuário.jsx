@@ -54,26 +54,33 @@ export default function CadastrarUsuário() {
 
 
     function validarCamposAdministrar() {
+
         const { email, senha, confirmação, questão, resposta } = dados;
+
         let errosCamposObrigatórios = validarCamposObrigatórios({ email });
         let errosValidaçãoEmail = validarCampoEmail(email);
         let errosConfirmaçãoSenhaOpcional = validarConfirmaçãoSenhaOpcional(senha, confirmação);
         let errosRecuperaçãoAcessoOpcional = validarRecuperaçãoAcessoOpcional(questão, resposta);
+
         setErros({ ...errosCamposObrigatórios, ...errosConfirmaçãoSenhaOpcional,
         ...errosRecuperaçãoAcessoOpcional, ...errosValidaçãoEmail });
+
         return checarListaVazia(errosCamposObrigatórios)
-        && checarListaVazia(errosConfirmaçãoSenhaOpcional)
-        && checarListaVazia(errosValidaçãoEmail) && checarListaVazia(errosRecuperaçãoAcessoOpcional);
+            && checarListaVazia(errosConfirmaçãoSenhaOpcional)
+            && checarListaVazia(errosValidaçãoEmail) && checarListaVazia(errosRecuperaçãoAcessoOpcional);
     };
 
 
     function validarCamposCadastrar() {
+
         const { perfil, cpf, nome, questão, resposta, senha, confirmação, email } = dados;
         console.log("CadastrarUsuário.validarCamposCadastrar:dados.nome -- " + dados.nome);
         console.log(JSON.parse(JSON.stringify(dados)));
+
         if (!usuárioLogado?.perfil) {
-            let errosCamposObrigatórios = validarCamposObrigatórios
-            ({ perfil, cpf, nome, questão, resposta, senha, confirmação, email });
+
+            let errosCamposObrigatórios = validarCamposObrigatórios({ perfil, cpf, nome, questão, resposta, senha, confirmação, email });
+            
             let errosValidaçãoEmail = validarCampoEmail(email);
             let errosConfirmaçãoSenha = validarConfirmaçãoSenha(senha, confirmação);
             setErros({ ...errosCamposObrigatórios, ...errosConfirmaçãoSenha, ...errosValidaçãoEmail });
