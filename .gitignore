@@ -1,0 +1,17 @@
+# Ignorar dependências (qualquer node_modules dentro do repo)
+**/node_modules/
+
+# Ignorar arquivos de ambiente
+**/.env
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build output (se existir)
+**/dist/
+**/build/
+
+# Outros arquivos temporários
+.DS_Store

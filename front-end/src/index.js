@@ -7,11 +7,11 @@ import "/node_modules/primeflex/primeflex.css";
 import "primeicons/primeicons.css";
 import "./global.css";
 import português from "./utilitários/português.json"
-import Rotas from "./rotas/rotas-aplicação";
+import RotasAplicação from "./rotas/rotas-aplicação";
 import {ProvedorUsuário} from './contextos/contexto-usuário';
 addLocale("pt", português)
 locale("pt")
 const rootElement = document.getElementById("root");
-const App = (<ProvedorUsuário><Rotas/></ProvedorUsuário>);
+const App = (<ProvedorUsuário><RotasAplicação/></ProvedorUsuário>);
 if (rootElement.hasChildNodes()) hydrateRoot(App, rootElement);
 else createRoot(rootElement).render(App);

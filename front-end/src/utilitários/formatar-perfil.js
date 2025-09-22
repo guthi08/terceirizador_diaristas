@@ -1,8 +1,8 @@
 
 export default function formatarPerfil(perfil) {
   switch(perfil) {
-    case "professor": return "Professor";
-    case "aluno": return "Aluno";
+    case "gerente empresa": return "Gerente empresa"; //seguindo a regra letar maiúscula primerio
+    case "diarista": return "Diarista";
     default: return;
   }
 };

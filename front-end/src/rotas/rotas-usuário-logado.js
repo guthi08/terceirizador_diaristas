@@ -3,7 +3,8 @@ import { Navigate, Outlet } from "react-router-dom";
 import ContextoUsuário from "../contextos/contexto-usuário";
 import MenuLateral from "../componentes/menu-lateral";
 import servidor from "../serviços/servidor";
-export default function RotasUsuáriosLogados() {
+
+export default function RotasUsuárioLogado() {
   const { usuárioLogado } = useContext(ContextoUsuário);
   useEffect(() => {
     if (usuárioLogado?.token) {

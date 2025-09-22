@@ -44,7 +44,7 @@ export default function LogarUsuário() {
   return (
     <div className={estilizarPáginaÚnica()}>
       <Toast ref={referênciaToast} position="bottom-center"/>
-      <h1 className={estilizarLogo()}>Propostas de Trabalhos de Computação</h1>
+      <h1 className={estilizarLogo()}>Terceirizadora de Diaristas</h1>
       <Card title="Login" className={estilizarCard()}>
         <div className={estilizarDivCampo()}>
           <label className={estilizarLabel()}>Usuário</label>
@@ -62,7 +62,7 @@ export default function LogarUsuário() {
         </div>
         <div className={estilizarFlex("center")}>
           <Button className={estilizarBotão()} label="Login" onClick={logarUsuário}/>
-          <Link className={estilizarLink()} to="/pagina-inicial">Recuperar Acesso de Usuário</Link>
+          <Link className={estilizarLink()} to="/recuperar-acesso">Recuperar Acesso de Usuário</Link>
           <Link className={estilizarLink()} to="/criar-usuario">Cadastrar Usuário</Link>
         </div>
       </Card>

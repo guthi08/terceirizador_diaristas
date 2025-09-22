@@ -2,14 +2,14 @@ import { useContext } from "react";
 import { Card } from "primereact/card";
 import { Image } from "primereact/image";
 import ContextoUsuário from "../../contextos/contexto-usuário";
-import computação from "../../imagens/imagem-computação.jpg";
+import computação from "../../imagens/imagem.jpg";
 import { estilizarCard, estilizarCardHeaderCentralizado, estilizarPáginaÚnica }
   from "../../utilitários/estilos";
 export default function PáginaInicial() {
   const { usuárioLogado } = useContext(ContextoUsuário);
   function HeaderCentralizado() {
     return (<div className={estilizarCardHeaderCentralizado()}>
-      Propostas de Trabalhos de Computação</div>)
+      Terceirizadora de Diarista</div>)
   };
   return (
     <div className={estilizarPáginaÚnica()}>

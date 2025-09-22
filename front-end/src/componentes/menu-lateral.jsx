@@ -5,61 +5,90 @@ import { Menu } from "primereact/menu";
 import { Sidebar } from "primereact/sidebar";
 import ContextoUsuário from "../contextos/contexto-usuário";
 import formatarPerfil from "../utilitários/formatar-perfil";
-import { estilizarBotão, estilizarColuna, estilizarGridColunaSidebar, estilizarGridSidebar, 
-  estilizarMenu, estilizarMenuLateralDesktop, estilizarMenuLateralMobile, estilizarSidebar, 
-  estilizarSubtítulo, estilizarTítulo } from "../utilitários/estilos";
+import {
+  estilizarBotão, estilizarColuna, estilizarGridColunaSidebar, estilizarGridSidebar,
+  estilizarMenu, estilizarMenuLateralDesktop, estilizarMenuLateralMobile, estilizarSidebar,
+  estilizarSubtítulo, estilizarTítulo
+} from "../utilitários/estilos";
+
 export default function MenuLateral({ children }) {
   const { usuárioLogado, setUsuárioLogado } = useContext(ContextoUsuário);
+  console.log("DADOS DO USUÁRIO NO MENU:", usuárioLogado);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [visible, setVisible] = useState(false);
   const tamanhoDesktop = windowWidth > 991;
   const navegar = useNavigate();
-  const opçõesProfessor = [
+
+  const opçõesGerenteEmpresa = [
     { label: "Página Inicial", command: () => navegar("/pagina-inicial") },
-    { label: "Menu", items: [
-      { label: "Cadastrar Usuário", command: () => navegar("/atualizar-usuario"),
-        disabled: usuárioLogado.status !== "ativo"},
-      { label: "Cadastrar Professor", command: () => navegar("/cadastrar-professor")},
-      { label: "Sair do Sistema", command: () => sairSistema()}
-    ]},
+    {
+      label: "Menu", items: [
+        {
+          label: "Cadastrar Usuário", command: () => navegar("/atualizar-usuario"),
+          disabled: usuárioLogado.status !== "ativo"
+        },
+        { label: "Cadastrar Gerente empresa", command: () => navegar("/cadastrar-gerente-empresa"), },
+        { label: "Sair do Sistema", command: () => sairSistema() }
+        
+      ]
+    },
   ];
-  const opçõesAluno = [];
-  function sairSistema() {
+   function sairSistema() {
     setUsuárioLogado({});
     navegar("/");
   };
+ //mudançãs cadastrar-aluno para cadastrar-diarista
+  const opçõesDiarista = [
+    { label: "Página Inicial", command: () => navegar("/pagina-inicial") },
+    {
+      label: "Menu", items: [
+        {
+          label: "Cadastrar Usuário", command: () => navegar("/atualizar-usuario"),
+          disabled: usuárioLogado.status !== "ativo"
+        },
+        { label: "Cadastrar Diarista", command: () => navegar("/cadastrar-diarista") },
+        { label: "Sair do Sistema", command: () => sairSistema() },
+      ]
+    },
+  ];
+
+
   function opçõesMenu() {
     switch (usuárioLogado.perfil) {
-      case "professor": return opçõesProfessor;
-      case "aluno": return opçõesAluno;
+      case "gerente empresa": return opçõesGerenteEmpresa; //era maiusculo 
+      case "diarista": return opçõesDiarista;
       default: return;
     }
   };
+
+
   function redimensionarJanela() {
     setWindowWidth(window.innerWidth);
   };
+
+
   function MenuServiços() {
     if (tamanhoDesktop) {
       return (
         <div className={estilizarMenuLateralDesktop(usuárioLogado?.cor_tema)}>
           <h1 className={estilizarTítulo(usuárioLogado?.cor_tema)}>{usuárioLogado?.nome}</h1>
           <h2 className={estilizarSubtítulo(usuárioLogado?.cor_tema)}>
-                {formatarPerfil(usuárioLogado?.perfil)}</h2>
-          <Menu className={estilizarMenu()} model={opçõesMenu()}/>
+            {formatarPerfil(usuárioLogado?.perfil)}</h2>
+          <Menu className={estilizarMenu()} model={opçõesMenu()} />
         </div>
       );
     } else return (
       <>
         <div className={estilizarMenuLateralMobile(usuárioLogado?.cor_tema)}>
-        <Button className={estilizarBotão(usuárioLogado?.cor_tema)} icon="pi pi-bars"
-          aria-label="Filter" onClick={() => setVisible(true)}/>
-        <h1 className={estilizarTítulo(usuárioLogado?.cor_tema)}>{usuárioLogado?.nome}</h1>
-        <h2 className={estilizarSubtítulo(usuárioLogado?.cor_tema)}>
-              {formatarPerfil(usuárioLogado?.perfil)}</h2>
+          <Button className={estilizarBotão(usuárioLogado?.cor_tema)} icon="pi pi-bars"
+            aria-label="Filter" onClick={() => setVisible(true)} />
+          <h1 className={estilizarTítulo(usuárioLogado?.cor_tema)}>{usuárioLogado?.nome}</h1>
+          <h2 className={estilizarSubtítulo(usuárioLogado?.cor_tema)}>
+            {formatarPerfil(usuárioLogado?.perfil)}</h2>
         </div>
         <Sidebar className={estilizarSidebar()} visible={visible}
-          onHide={() => setVisible(false)}showCloseIcon>
-          <Menu className={estilizarMenu()} model={opçõesMenu()}/>
+          onHide={() => setVisible(false)} showCloseIcon>
+          <Menu className={estilizarMenu()} model={opçõesMenu()} />
         </Sidebar>
       </>
     );
@@ -71,7 +100,7 @@ export default function MenuLateral({ children }) {
   }, []);
   return (
     <div className={estilizarGridSidebar(usuárioLogado?.cor_tema)}>
-      <div className={estilizarGridColunaSidebar()}><MenuServiços/></div>
+      <div className={estilizarGridColunaSidebar()}><MenuServiços /></div>
       <div className={estilizarColuna()}>{children}</div>
     </div>
   );

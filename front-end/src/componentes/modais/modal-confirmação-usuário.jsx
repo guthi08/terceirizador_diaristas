@@ -3,30 +3,51 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "primereact/button";
 import { Toast } from "primereact/toast";
 import ContextoUsuário from "../../contextos/contexto-usuário";
-import { estilizarBotão, estilizarBotãoRemover, estilizarDivCampo, estilizarInlineFlex, 
-  estilizarLabel, estilizarModal } from "../../utilitários/estilos";
+import {
+  estilizarBotão, estilizarBotãoRemover, estilizarDivCampo, estilizarInlineFlex,
+  estilizarLabel, estilizarModal
+} from "../../utilitários/estilos";
+//importações add na etapa 2 
+import { serviçoAlterarUsuário, serviçoRemoverUsuário } from "../../serviços/serviços-usuário";
+import mostrarToast from "../../utilitários/mostrar-toast";
+
+/*add as constantes usuárioLogado. */
 export default function ModalConfirmaçãoUsuário() {
   const referênciaToast = useRef(null);
-  const { setUsuárioLogado, confirmaçãoUsuário, setConfirmaçãoUsuário, setMostrarModalConfirmação }
+  const { setUsuárioLogado, confirmaçãoUsuário, setConfirmaçãoUsuário, setMostrarModalConfirmação, usuárioLogado }
     = useContext(ContextoUsuário);
-  const dados = { cpf: confirmaçãoUsuário?.cpf, perfil: confirmaçãoUsuário?.perfil,
+
+  const dados = {
+    cpf: confirmaçãoUsuário?.cpf, perfil: confirmaçãoUsuário?.perfil,
     nome: confirmaçãoUsuário?.nome, senha: confirmaçãoUsuário?.senha,
     email: confirmaçãoUsuário?.email, questão: confirmaçãoUsuário?.questão,
-    resposta: confirmaçãoUsuário?.resposta, cor_tema: confirmaçãoUsuário?.cor_tema };
-  const [redirecionar] = useState(false);
+    resposta: confirmaçãoUsuário?.resposta, cor_tema: confirmaçãoUsuário?.cor_tema
+  };
+  const [redirecionar, setRedirecionar] = useState(false); //add na etapa 2 setRedirecionar
+
   const navegar = useNavigate();
   function labelOperação() {
     switch (confirmaçãoUsuário?.operação) {
       case "salvar": return "Salvar";
+      case "alterar": return "Alterar";
+      case "remover": return "Remover";
       default: return;
     }
   };
+
+
+
+  //alterado o novo case do diarista
   function exibirPerfilFormatado() {
     switch (dados.perfil) {
-      case "professor": return "Professor";
+      case "gerente empresa": return "Gerente empresa";
+      case "diarista": return "Diarista";
       default: return "";
     }
   };
+
+
+
   function fecharToast() {
     if (redirecionar) {
       setMostrarModalConfirmação(false);
@@ -35,37 +56,83 @@ export default function ModalConfirmaçãoUsuário() {
       navegar("../pagina-inicial");
     }
   };
+
+
+  //add na funçao a parte de diarista
   function finalizarCadastro() {
-    if (dados.perfil === "professor") {
+    if (dados.perfil === "gerente empresa") {
       setUsuárioLogado({ ...dados, cadastrado: false });
       setMostrarModalConfirmação(false);
-      navegar("../cadastrar-professor");
+      navegar("../cadastrar-gerente-empresa");
+    } else if (dados.perfil === "diarista") {
+      setUsuárioLogado({ ...dados, cadastrado: false });
+      setMostrarModalConfirmação(false);
+      navegar("../cadastrar-diarista");
     }
   };
+
+
+
+  //função substituida na etapa 2
   function executarOperação() {
     switch (confirmaçãoUsuário.operação) {
       case "salvar":
         finalizarCadastro();
         break;
+      case "alterar":
+        alterarUsuário({
+          email: dados.email, senha: dados.senha, questão: dados.questão,
+          resposta: dados.resposta, cor_tema: dados.cor_tema
+        });
+        break;
+      case "remover":
+        removerUsuário();
+        break;
       default: break;
     }
   };
-  function ocultar() {
+
+    function ocultar() {
     if (!redirecionar) {
       setConfirmaçãoUsuário({});
       setMostrarModalConfirmação(false);
     }
   };
+
+
+  
+  //funão add na etapa 2
+  async function alterarUsuário(dadosAlterados) {
+    try {
+      const response = await serviçoAlterarUsuário({ ...dadosAlterados, cpf: usuárioLogado.cpf });
+      setUsuárioLogado({ ...usuárioLogado, ...response.data });
+      setRedirecionar(true);
+      mostrarToast(referênciaToast, "Alterado com sucesso! Redirecionando à Página Inicial...",
+        "sucesso");
+    } catch (error) { mostrarToast(referênciaToast, error.response.data.erro, "erro"); }
+  };
+
+  //função add na etapa 2
+  async function removerUsuário() {
+    try {
+      await serviçoRemoverUsuário(usuárioLogado.cpf);
+      setRedirecionar(true);
+      mostrarToast(referênciaToast, "Removido com sucesso! Redirecionando ao Login.", "sucesso");
+    } catch (error) { mostrarToast(referênciaToast, error.response.data.erro, "erro"); }
+  };
+
+
+
   return (
     <div className={estilizarModal()}>
-      <Toast ref={referênciaToast} onHide={fecharToast} position="bottom-center"/>
+      <Toast ref={referênciaToast} onHide={fecharToast} position="bottom-center" />
       <div className={estilizarDivCampo()}>
         <label className={estilizarLabel(confirmaçãoUsuário?.cor_tema)}>Tipo de Perfil:</label>
         <label>{exibirPerfilFormatado()}</label>
       </div>
       <div className={estilizarDivCampo()}>
         <label className={estilizarLabel(confirmaçãoUsuário?.cor_tema)}>
-           CPF -- nome de usuário:</label>
+          CPF -- nome de usuário:</label>
         <label>{dados.cpf}</label>
       </div>
       <div className={estilizarDivCampo()}>
@@ -79,7 +146,7 @@ export default function ModalConfirmaçãoUsuário() {
       </div>
       <div className={estilizarDivCampo()}>
         <label className={estilizarLabel(confirmaçãoUsuário?.cor_tema)}>
-           Questão de Segurança:</label>
+          Questão de Segurança:</label>
         <label>{dados.questão}</label>
       </div>
       <div className={estilizarDivCampo()}>
@@ -88,9 +155,9 @@ export default function ModalConfirmaçãoUsuário() {
       </div>
       <div className={estilizarInlineFlex()}>
         <Button label={labelOperação()} onClick={executarOperação}
-          className={estilizarBotão(confirmaçãoUsuário?.cor_tema)}/>
+          className={estilizarBotão(confirmaçãoUsuário?.cor_tema)} />
         <Button label="Corrigir" onClick={ocultar}
-          className={estilizarBotãoRemover(confirmaçãoUsuário?.cor_tema)}/>
+          className={estilizarBotãoRemover(confirmaçãoUsuário?.cor_tema)} />
       </div>
     </div>
   );

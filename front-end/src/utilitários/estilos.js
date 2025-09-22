@@ -11,8 +11,11 @@ export const opçõesCores = [
   { label: "Verde", value: "green" },
   { label: "Verde Azulado", value: "teal" }
 ];
-export const TAMANHOS = { CPF: 13, SENHA: 15 };
-  
+
+//add na etapa 2 ano e telefone em ordem alfabética
+//removi telefone
+export const TAMANHOS = { ANO: 2, CPF: 13, SENHA: 15 };
+
 export const TEMA_PADRÃO = "bluegray";
 export function estilizarBotão() {
   const cor_botão = "green";
@@ -83,7 +86,7 @@ export function estilizarInputNumber(erro, cor_tema) {
   if (erro) cor_borda = "p-invalid";
   return `py-0 ${cor_borda}`;
 };
-export function estilizarInputText(erro, input_classname, cor_tema=TEMA_PADRÃO) {
+export function estilizarInputText(erro, input_classname, cor_tema = TEMA_PADRÃO) {
   let cor_borda = `border-${cor_tema}-800`;
   if (erro) cor_borda = "p-invalid";
   return `input${input_classname} py-0 ${cor_borda}`;
@@ -131,3 +134,9 @@ export function estilizarSubtítulo(cor_tema) {
 export function estilizarTítulo(cor_tema) {
   return `text-base align-self-start text-${cor_tema}-800 mr-3`;
 }
+
+
+//add na etapa 2
+export function estilizarParágrafo() {
+  return "text-justify text-lg md:text-sm align-self-start text-gray-900";
+};

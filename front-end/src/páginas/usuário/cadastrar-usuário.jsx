@@ -1,5 +1,7 @@
 import { useContext, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+
+
 import { Button } from "primereact/button";
 import { Card } from "primereact/card";
 import { Dialog } from "primereact/dialog";
@@ -9,18 +11,32 @@ import { InputMask } from "primereact/inputmask";
 import { InputText } from "primereact/inputtext";
 import { Password } from "primereact/password";
 import { Toast } from "primereact/toast";
+
+
 import ContextoUsuário from "../../contextos/contexto-usuário";
 import ModalConfirmaçãoUsuário from "../../componentes/modais/modal-confirmação-usuário";
 import mostrarToast from "../../utilitários/mostrar-toast";
 import { CPF_MÁSCARA } from "../../utilitários/máscaras";
+
+
 import { MostrarMensagemErro, checarListaVazia, validarCampoEmail, validarCamposObrigatórios,    
-  validarConfirmaçãoSenha, validarConfirmaçãoSenhaOpcional, validarRecuperaçãoAcessoOpcional }
+  validarConfirmaçãoSenha, validarConfirmaçãoSenhaOpcional, validarRecuperaçãoAcessoOpcional, 
+  }
   from "../../utilitários/validações";
+
+
+/*add na etepa 2:
+estilizarBotãoRemover, estilizarDivBotõesAção*/ 
+
+
 import { TAMANHOS, TEMA_PADRÃO, estilizarBotão, estilizarCard, estilizarDialog, 
   estilizarDivBotõesAção, estilizarDivCampo, estilizarDivider, estilizarDropdown, estilizarFlex, 
   estilizarFooterDialog, estilizarInputMask, estilizarInputText, estilizarLabel, estilizarLink, 
-  estilizarPasswordInput, estilizarPasswordTextInputBorder, estilizarSubtítulo, opçõesCores }
+  estilizarPasswordInput, estilizarPasswordTextInputBorder, estilizarSubtítulo,estilizarBotãoRemover, 
+  opçõesCores }
   from "../../utilitários/estilos";
+
+
 import { serviçoVerificarCpfExistente } from "../../serviços/serviços-usuário";
 export default function CadastrarUsuário() {
   
@@ -33,14 +49,16 @@ export default function CadastrarUsuário() {
     questão: usuárioLogado?.questão || "", resposta: "",
     cor_tema: usuárioLogado?.cor_tema || TEMA_PADRÃO });
   const [erros, setErros] = useState({});
-  const opçõesPerfis = [{ label: "Professor", value: "professor" },
-    { label: "Aluno", value: "aluno" }];
+  const opçõesPerfis = [{ label: "Gerente empresa", value: "gerente empresa" },
+    { label: "Diarista", value: "diarista" }];
   
   function alterarEstado(event) {
     const chave = event.target.name;
     const valor = event.target.value;
     setDados({ ...dados, [chave]: valor });
   };
+
+
   function validarCamposAdministrar() {
     const { email, senha, confirmação, questão, resposta } = dados;
     let errosCamposObrigatórios = validarCamposObrigatórios({ email });
@@ -53,6 +71,9 @@ export default function CadastrarUsuário() {
       && checarListaVazia(errosConfirmaçãoSenhaOpcional)
       && checarListaVazia(errosValidaçãoEmail) && checarListaVazia(errosRecuperaçãoAcessoOpcional);
   };
+
+
+
   function validarCamposCadastrar() {
     const { perfil, cpf, nome, questão, resposta, senha, confirmação, email } = dados;
     console.log("CadastrarUsuário.validarCamposCadastrar:dados.nome -- " + dados.nome);
@@ -67,27 +88,42 @@ export default function CadastrarUsuário() {
         && checarListaVazia(errosValidaçãoEmail);
     }
   };
+
   
   function validarCampos() {
     if (!usuárioLogado?.perfil) return validarCamposCadastrar();
     else return validarCamposAdministrar();
   };
+
+
+
   function títuloFormulário() {
     if (!usuárioLogado?.perfil) return "Cadastrar Usuário";
-    else return "Consultar Usuário";
+    else return "Alterar Usuário"; // troca de "Consultar Usuário" para "Alterar Usuário"
   };
+
+
+
   function textoRetorno() {
     if (!usuárioLogado?.perfil) return "Retornar para login";
     else return "Retornar para página inicial";
   };
+
+
+
   function linkRetorno() {
     if (!usuárioLogado?.perfil) return "/";
     else return "/pagina-inicial";
   };
+
+
+
   function limparOcultar() {
     setConfirmaçãoUsuário(null);
     setMostrarModalConfirmação(false);
   };
+
+
   async function validarConfirmarCriação() {
     const camposVálidos = validarCampos();
     if (camposVálidos) {
@@ -105,17 +141,33 @@ export default function CadastrarUsuário() {
     setConfirmaçãoUsuário({ ...dados, operação });
     setMostrarModalConfirmação(true);
   };
+
+
+  /*função substituida */
+  
   function ComandosConfirmação() {
     if (!usuárioLogado?.perfil) {
-      return <Button className={estilizarBotão(dados.cor_tema)} label="Salvar" 
-        onClick={validarConfirmarCriação}/>;
+      return <Button className={estilizarBotão(dados.cor_tema)} label="Salvar"
+      onClick={validarConfirmarCriação}/>;
     } else {
       return (
         <div className={estilizarDivBotõesAção()}>
+        <Button className={estilizarBotão(dados.cor_tema)} label="Alterar"
+        onClick={() => validarConfirmarAlteração()}/>
+        <Button className={estilizarBotãoRemover(dados.cor_tema)} label="Remover"
+        onClick={() => confirmarOperação("remover")}/>
         </div>
       );
     }
   };
+
+
+  //funcão add na etapa 2
+  function validarConfirmarAlteração() {
+      const camposVálidos = validarCampos();
+      if (camposVálidos) confirmarOperação("alterar");
+  };
+
   function alinharCentro() { if (!usuárioLogado?.cadastrado) return "center"; };
   return (
     <div className={estilizarFlex(alinharCentro())}>
